@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1= title
+  form#formAddBroadcast(name="addBroadcast",method="post",action="/addBroadcast")
+    input#inputBroadcastTitle(type="text", placeholder="broadcastTitle", name="broadcastTitle")
+    input#inputBroadcastAirDate(type="date", placeholder="broadcastAirDate", name="broadcastAirDate")
+    input#inputBroadcastGuests(type="text", placeholder="broadcastGuests", name="broadcastGuests")
+    input#inputBroadcastHosts(type="text", placeholder="Hosts", name="broadcastHosts")
+    br
+    label(for="broadcastImage") Broadcast Image
+    br
+    input#inputBroadcastImage(type="file", name="broadcastImage")
+    br
+    label(for="audioFile") Broadcast Audio File
+    br
+    input#inputAudioFile(type="file", name="audioFile")
+    br
+    br
+    button#btnSubmit(type="submit") submit
