@@ -1,8 +1,343 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/* @import "normalize.css"; */
+
+:root {
+   --headerFooter: #006782;
+   --lightText: #f5f5f4;
+   --mainBackground: #f5f5f4;
+   --dark: #46494C;
+   --secondary: #4C5C68;
+   --medium: #c5c3c6;
 }
 
 a {
-  color: #00B7FF;
+   text-decoration: none;
+   color: inherit;
+}
+
+body,
+html {
+   margin: 0;
+   padding: 0;
+   color: #555555;
+   height: 100%;
+}
+
+.bringToFront{
+   z-index: 100;
+}
+
+.section {
+   width: 100%;
+}
+
+.card {
+   max-width: 900px;
+   margin: 0 auto;
+}
+
+.container {
+   height: 100%;
+   width: 100%;
+}
+
+.content {
+   margin: 0 1em;
+   padding: 1em 0;
+
+}
+
+#copyWrite {
+   margin: 3em 2em 1em;
+}
+
+#featuredBroadcastSection {
+   background: var(--headerFooter);
+   background: url(https://link.focusonthefamily.com/email/CRM/images/sound-speaker-radio-microphone.jpg) var(--headerFooter) no-repeat;
+   background-size: cover;
+   background-position: center;
+   height: 100%;
+   position: relative;
+}
+
+#featuredBroadcastContainer {
+   justify-content: space-around;
+   align-items: center;
+}
+
+#featuredBroadcastContent {
+   color: var(--lightText);
+   display: grid;
+   max-width: 640px;
+   grid-template-columns: 2fr 10fr 2fr;
+   grid-template-rows: auto auto auto auto;
+   grid-template-areas:
+      ". date date"
+      "playButton title title"
+      "prevArr guests nextArr"
+      ". description description";
+   grid-gap: 0px 20px;
+   justify-items: start;
+   align-items: center;
+}
+
+#featuredBroadcastContainer h1 {
+   font-size: 56px;
+   line-height: 60px;
+}
+
+/* Featured Broadcast Grid Cells : BEGIN */
+.featureBroadcastDescription {
+   grid-area: description
+}
+
+.featureBroadcastTitle {
+   grid-area: title;
+}
+
+.leftArrow {
+   grid-area: prevArr;
+}
+
+.featureBroadcastGuests {
+   grid-area: guests;
+}
+
+.rightArrow {
+   grid-area: nextArr;
+   display: none;
+}
+
+.featureBroadcastDate {
+   grid-area: date;
+
+}
+
+.playButton {
+   grid-area: playButton;
+}
+
+/* Featured Broadcast Grid Cells : END */
+
+.flexContainer {
+   display: flex;
+}
+
+footer {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   
+   background-color: var(--headerFooter);
+   color: var(--medium);
+   z-index: -1;
+   width: 100%;
+}
+
+#footerContainer{
+   padding-top:2em;
+}
+
+#footerContent {
+   align-self: flex-end;
+   height: 100%;
+   width: 100%;
+}
+
+#footerNav img {
+   max-width: 50px;
+}
+
+#footerShareIcons {
+   float: right;
+}
+
+h1, h2, h3, h4 {
+   font-family: 'IBM Plex Sans', sans-serif;
+}
+
+h1 {
+   font-size: 2em;
+}
+
+header {
+   width: 100%;
+   background: var(--headerFooter);
+   position: fixed;
+   top: 0;
+   z-index: 200;
+}
+
+#headerContent {
+   color: var(--dark);
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+#hostContent{
+   align-self: center;
+   justify-self: center;
+}
+
+#hostSection {
+   background: #ffffff;
+}
+
+#hostBioContainer {
+   justify-content: space-around;
+   align-items: top;
+}
+
+.hostImage {
+   display: block;
+   max-width: 280px;
+   margin: 0 auto;
+   width: 100%;
+}
+
+.hostBio {
+   padding: 1em;
+   background: var(--mainBackground);
+   margin: 1em;
+}
+
+img {
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 16px;
+   color: #000000;
+}
+
+main {
+   position: relative;
+   background-color: var(--mainBackground);
+   margin-bottom: 200px;
+}
+
+p {
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 16px;
+   line-height: 150%;
+}
+
+.pastBroadcastContent{
+   align-self: center;
+   justify-self: center;
+}
+.pastBroadcastCard {
+   list-style: none;
+   background: var(--secondary);
+   color: var(--lightText);
+   border-radius: 1em;       
+}
+
+.pastBroadcastCard div {
+   margin: 0 2em;
+}
+
+.fa {
+   padding: 8px;
+   font-size: 30px;
+   width: 30px;
+   text-align: center;
+   text-decoration: none;
+   border-radius: 60%;
+}
+
+.fa-bars {
+   cursor: pointer;
+   color: var(--lightText);
+   margin: 0 1em;
+   font-size: 30px;
+}
+
+.fa-facebook {
+   background: #cccccc;
+   color: var(--lightText);
+   font-size: 30px;
+}
+
+.fa-twitter {
+   background: #ccc;
+   color: var(--lightText);
+   font-size: 30px;
+}
+
+.fa-play-circle {
+   font-size: 80px;
+}
+
+.fas {
+   font-size: 60px;
+}
+
+.fontAwesome {
+   font-family: 'fontawesome';
+}
+
+#logo {
+   max-width: 200px;
+   height: auto;
+   width: 100%;
+}
+
+.mobileReveal {
+   display: none;
+}
+
+.nav {
+   justify-content: space-between;
+   min-width: 350px;
+   max-width: 500px;
+   color: var(--lightText);
+   margin: 0 2em;
+}
+
+.shadowBottom {
+   -webkit-box-shadow: 0 8px 16px -6px #555555;
+-moz-box-shadow: 0 8px 16px -6px #555555;
+    box-shadow: 0 8px 16px -6px #555555;
+}
+
+@media screen and (max-width: 670px) {
+
+   h1 {
+      text-align: center;
+      font-size: 36px !important;
+      line-height: 40px !important;
+   }
+
+   .flexContainer {
+      flex-direction: column;
+   }
+
+   .mobileHide {
+      display: none !important;
+   }
+
+   .mobileReveal {
+      display: block;
+   }
+
+   main {
+      margin-bottom: 430px;
+   }
+
+   .nav {
+      max-width: 100%;
+   }
+
+   #featuredBroadcastContent {
+      width: 100%;
+      grid-template-columns: 1fr 2fr 1fr;
+      grid-template-rows: auto auto auto auto;
+      grid-template-areas:
+         "date date date"
+         "title title title"
+         "prevArr playButton nextArr"
+         "guests guests guests"
+         "description description description";
+      justify-items: center;
+      align-items: center;
+
+   }
 }

@@ -1,7 +1,63 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  a(href="/broadcasts") Broadcasts
-  a(href="/addBroadcast") Add Broadcast
+
+  section#featuredBroadcastSection.shadowBottom.section
+    #featuredBroadcastContainer.card.container.flexContainer
+      #featuredBroadcastContent.content
+        .featureBroadcastDate
+          h3 Today&apos;s Broadcast
+        .fontAwesome.playButton
+          span.far.fa-play-circle
+        .featureBroadcastTitle
+          h1 Broadcast Title
+        .fontAwesome.leftArrow
+          span.fas.fa-angle-left
+        .featureBroadcastGuests
+          h3 Broadcast Guests 
+        .fontAwesome.rightArrow
+          span.fas.fa-angle-right
+        .featureBroadcastDescription.mobileHide
+          p
+            | Broadcast Description sdakjf skdaf asdj dhfa jdkf asdjf askdjf sf sadkjf slakdjf lsakdjf
+  section#hostSection.section
+    #hostContainer.container.card.flexContainer
+      #hostContent.content
+        h1 Hosts of the Broadcast
+        #hostBioContainer.flexContainer
+          .hostBio
+            img.hostImage(src='http://link.focusonthefamily.com/email/CRM/11/VidScreenShot.jpg')
+            h2 Jim Daly
+            p
+              | Jim Daly is an author and broadcaster, president of Focus on the Family and host of the daily
+              | broadcast,
+              | heard by more than 6.3 million listeners a week and honored as 2012 Program of the Year by the
+              | National
+              | Religious Broadcasters.
+          .hostBio
+            img.hostImage(src='http://link.focusonthefamily.com/email/CRM/11/VidScreenShot.jpg')
+            h2 John Fuller
+            p
+              | John Fuller is vice president of the Audio division and co-host of the daily &quot;Focus on the Family&quot;
+              | radio
+              | program. He speaks and writes about family, faith, media and business. John and his wife, Dena,
+              | reside
+              | in Colorado Springs, Colo., and have six children.
+  main#pastBroadcastCardsSection.section.shadowBottom
+    #pastBroadcastCardContainer.container.flexContainer.card
+      #pastEpisodeContent.content
+        h1 Past Episodes
+        li.flexContainer.pastBroadcastCard
+          div
+            h3 Air Date
+          div
+            h2 Broadcast Titles
+            h3 Guests
+        hr
+        li.flexContainer.pastBroadcastCard
+          div
+            h3 Air Date
+          div
+            h2 Broadcast Title
+            h3 Guests
+  

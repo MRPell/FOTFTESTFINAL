@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  main#pastBroadcastCardsSection.section.shadowBottom
+    #pastBroadcastCardContainer.container.flexContainer.card
+      #pastEpisodeContent.content
+        h1 Past Episodes
+        each broadcast, index in broadcastArchive
+          li.pastBroadcastCard.flexContainer
+            div
+              h4 Air Date
+              h4=moment(broadcast.broadcastAirDate).format('MM/DD/YYYY')
+            div
+              h3 
+                a(href='/broadcast/details/' + broadcast.broadcastTitle.replace(/\s/g, '-' ).toLowerCase())=broadcast.broadcastTitle
+              h4 Guests:&nbsp;
+                =broadcast.broadcastGuests
+          hr        
+
+  

@@ -1,19 +1,31 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
+let bodyParser = require('body-parser');
 
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/fotfBroadcastApp');
+// Run Db with cmd Prompt or powershell: D:\MongoDb\mongodb-win32-x86_64-2008plus-ssl-4.0.3\bin\mongod.exe  --dbpath C:\Users\mrpel\WebAppProjects\fotfBroadcastApp\data
+let mongo = require('mongodb');
+let monk = require('monk');
+let db = monk('localhost:27017/fotfBroadcastApp');
 
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+let app = express();
 
-var app = express();
+app.locals.moment = require('moment');
+
+//TODO: Set up cloud database
+// const MongoClient = require('mongodb').MongoClient;
+// const uri = "mongodb+srv://MRPell:<Password>@genesiscluster-mwmsw.mongodb.net/test?retryWrites=true";
+// const client = new MongoClient(uri, { useNewUrlParser: true });
+// client.connect(err => {
+//   const db = client.db("fotfBroadcastApp").collection("broadcastList");
+//  // perform actions on the collection object
+//   client.close();
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,12 +33,12 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router
-app.use(function(req,res,next){
+app.use(function(req, res, next) {
   req.db = db;
   next();
 });
@@ -49,5 +61,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;
