@@ -4,9 +4,10 @@ let broadcastListData = [];
 
 // DOM Ready =============================================================
 $(document).ready(function () {
-  // Populate the user table on initial page load
+  // Populate the broadcasts on initial page load
+  populateRecents();
 
-  populateList();
+  //  populateFeatured();  
 
   //Enable mobile menu Icon to be clicked
   document.getElementById("navIcon").addEventListener("click", toggleFooterMenu);
@@ -16,46 +17,62 @@ $(document).ready(function () {
 // Functions =============================================================
 
 
-   //bring footer menu to front of screen
-   function toggleFooterMenu(){
-      console.log('toggle footer')
-      let x = $('footer');
-      x.toggleClass('bringToFront')
+//bring footer menu to front of screen
+function toggleFooterMenu() {
+  console.log('toggle footer')
+  let x = $('footer');
+  x.toggleClass('bringToFront')
 
-   }
+}
 
 /**
- * Fill table with data
+ * Fill featured with broadcasts
  */
-function populateList() {
+// function populateFeatured() {
+//   $.getJSON('/broadcast/featured')
+//     .done(function (data) {
+      
+//         let broadcastUrl = data[0].broadcastTitle.replace(/\s/g, '-').toLowerCase();
+//         $('#featuredBroadcastTitle').html(data[0].broadcastTitle);
+//         $('#featuredBroadcastGuests').html(data[0].broadcastGuests);
+//         $('#featuredBroadcastDescription').html('Helping Families Thrive, Hosted by ' + broadcastHosts);
+     
+//     })
+//     .fail(function (data) {
+//       console.log("Error retrieving broadcast data");
+//     });
+// }
+
+
+/**
+ * Fill recents with broadcasts
+ */
+function populateRecents() {
   // Empty content string
   let listContent = '';
   // jQuery AJAX call for JSON
-  $.getJSON('/broadcastList')
+
+  $.getJSON('/broadcast/recent')
     .done(function (data) {
       
+
       // For each item in our JSON,
       // add a table row and cells to the content string
-      $.each(data, function () {        
-        let broadcastUrl = this.broadcastTitle.replace(/\s/g, '-' ).toLowerCase();
-        console.log(broadcastUrl)
+      $.each(data, function () {
+        console.log(this.broadcastTitle);
+        let broadcastUrl = this.broadcastTitle.replace(/\s/g, '-').toLowerCase();
         listContent +=
-          '<li> <a href="/broadcasts/'+broadcastUrl+'" class="linkBroadcast" rel="' +
-          this.broadcastTitle + '">' + this.broadcastTitle +
-          '</a></li>';
-        listContent += '<li>' + this.broadcastHosts + '</li>';
-        listContent += '<li>' + this.broadcastGuests + '</li>';
-        listContent += '<li>' + moment(this.broadcastAirDate).format('MM/DD/YYYY') + '</li>';
+          '<a href="/broadcast/details/' + broadcastUrl + '" > <li class="flexContainer recentBroadcastCard"><div><h3>Air Date:</h3>' +
+          moment(this.broadcastAirDate).format('MM/DD/YYYY') +
+          '</div><div><h2>' + this.broadcastTitle + '</h2><h3>' + this.broadcastGuests + '</h3></div></li></a > <br /> <hr /> <br />';
       });
-
-      // Inject the whole content string into our existing HTML table
-      $('#broadcastList ul').html(listContent);
-
+         // Inject the whole content string into our existing HTML table
+         $('#recentEpisodesList').html(listContent);
     })
-      
+
     .fail(function (data) {
-    console.log("Error retrieving broadcast data")
-  });
+      console.log("Error retrieving broadcast data");
+    });
 }
 
 

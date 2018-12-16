@@ -219,18 +219,18 @@ p {
    line-height: 150%;
 }
 
-.pastBroadcastContent{
+.recentBroadcastContent{
    align-self: center;
    justify-self: center;
 }
-.pastBroadcastCard {
+.recentBroadcastCard {
    list-style: none;
    background: var(--secondary);
    color: var(--lightText);
    border-radius: 1em;       
 }
 
-.pastBroadcastCard div {
+.recentBroadcastCard div {
    margin: 0 2em;
 }
 

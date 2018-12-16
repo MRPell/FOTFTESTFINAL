@@ -1,12 +1,12 @@
 extends layout
 
 block content
-  main#pastBroadcastCardsSection.section.shadowBottom
-    #pastBroadcastCardContainer.container.flexContainer.card
-      #pastEpisodeContent.content
-        h1 Past Episodes
+  main#recentBroadcastCardsSection.section.shadowBottom
+    #recentBroadcastCardContainer.container.flexContainer.card
+      #recentEpisodeContent.content
+        h1 recent Episodes
         each broadcast, index in broadcastArchive
-          li.pastBroadcastCard.flexContainer
+          li.recentBroadcastCard.flexContainer
             div
               h4 Air Date
               h4=moment(broadcast.broadcastAirDate).format('MM/DD/YYYY')

@@ -10,15 +10,15 @@ block content
         .fontAwesome.playButton
           span.far.fa-play-circle
         .featureBroadcastTitle
-          h1 Broadcast Title
+          h1#featuredBroadcastTitle Broadcast Title
         .fontAwesome.leftArrow
           span.fas.fa-angle-left
         .featureBroadcastGuests
-          h3 Broadcast Guests 
+          h3#featuredBroadcastGuests Broadcast Guests 
         .fontAwesome.rightArrow
           span.fas.fa-angle-right
         .featureBroadcastDescription.mobileHide
-          p
+          p#featuredBroadcastDescription
             | Broadcast Description sdakjf skdaf asdj dhfa jdkf asdjf askdjf sf sadkjf slakdjf lsakdjf
   section#hostSection.section
     #hostContainer.container.card.flexContainer
@@ -43,21 +43,22 @@ block content
               | program. He speaks and writes about family, faith, media and business. John and his wife, Dena,
               | reside
               | in Colorado Springs, Colo., and have six children.
-  main#pastBroadcastCardsSection.section.shadowBottom
-    #pastBroadcastCardContainer.container.flexContainer.card
-      #pastEpisodeContent.content
-        h1 Past Episodes
-        li.flexContainer.pastBroadcastCard
-          div
-            h3 Air Date
-          div
-            h2 Broadcast Titles
-            h3 Guests
-        hr
-        li.flexContainer.pastBroadcastCard
-          div
-            h3 Air Date
-          div
-            h2 Broadcast Title
-            h3 Guests
+  main#recentBroadcastCardsSection.section.shadowBottom
+    #recentBroadcastCardContainer.container.flexContainer.card
+      #recentEpisodeContent.content
+        h1 Recent Episodes
+        div#recentEpisodesList
+          li.flexContainer.recentBroadcastCard
+            div
+              h3 Air Date
+            div
+              h2 Broadcast Titles
+              h3 Guests
+          hr
+          li.flexContainer.recentBroadcastCard
+            div
+              h3 Air Date
+            div
+              h2 Broadcast Title
+              h3 Guests
   

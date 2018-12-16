@@ -17,6 +17,8 @@ let app = express();
 
 app.locals.moment = require('moment');
 
+
+
 //TODO: Set up cloud database
 // const MongoClient = require('mongodb').MongoClient;
 // const uri = "mongodb+srv://MRPell:<Password>@genesiscluster-mwmsw.mongodb.net/test?retryWrites=true";

@@ -1,30 +1,30 @@
-var express = require('express');
+let express = require('express');
 
-var router = express.Router();
+let router = express.Router();
 
-  //Sort descending Function  
-  function sortDesc(prop) {
-    return function (a, b) {
-      if (a[prop] < b[prop]) {
-        return 1;
-      } else if (a[prop] > b[prop]) {
-        return -1;
-      }
-      return 0;
+//Sort descending Function  
+function sortDesc(prop) {
+  return function (a, b) {
+    if (a[prop] < b[prop]) {
+      return 1;
+    } else if (a[prop] > b[prop]) {
+      return -1;
     }
+    return 0;
   }
+}
 
-    //Sort ascending Function  
-    function sortAsc(prop) {
-      return function (a, b) {
-        if (a[prop] > b[prop]) {
-          return 1;
-        } else if (a[prop] < b[prop]) {
-          return -1;
-        }
-        return 0;
-      }
+//Sort ascending Function  
+function sortAsc(prop) {
+  return function (a, b) {
+    if (a[prop] > b[prop]) {
+      return 1;
+    } else if (a[prop] < b[prop]) {
+      return -1;
     }
+    return 0;
+  }
+}
 
 
 /* GET home page. */
@@ -33,11 +33,11 @@ router.get('/', function (req, res, next) {
 });
 
 /* GET Broadcast archive page. */
-router.get('/broadcastArchive', function (req, res) {
+router.get('/broadcast/archive', function (req, res) {
   let db = req.db;
   let collection = db.get('broadcastCollection');
-
-  collection.find({}, {}, function (e, docs) {
+  let dbQuery = { "broadcastAirDate": { $lte: new Date((new Date().getTime())) } };
+  collection.find(dbQuery, {}, function (e, docs) {
     let sortedBroadcastData = docs.sort(sortDesc("broadcastAirDate"));
     res.render('broadcastArchive', {
       "broadcastArchive": sortedBroadcastData
@@ -46,17 +46,30 @@ router.get('/broadcastArchive', function (req, res) {
 });
 
 /* GET Broadcast json. */
-router.get('/broadcastList', function (req, res) {
+router.get('/broadcast/recent', function (req, res) {
   let db = req.db;
   let collection = db.get('broadcastCollection');
-  collection.find({{"broadcastCollection.broadcastAirDate": {$lte: new Date().getTime()-(1*60*60*1000) }}, {}, function (e, docs) {
-    let sortedBroadcastData = docs.sort(sortAsc("broadcastAirDate"));
+  let dbQuery = { "broadcastAirDate": { $gte: new Date((new Date().getTime() - (10 * 24 * 60 * 60 * 1000))), $lte: new Date((new Date().getTime())) } };
+  collection.find(dbQuery, {}, function (e, docs) {
+    let sortedBroadcastData = docs.sort(sortDesc("broadcastAirDate"));
     res.json(sortedBroadcastData);
   });
 });
 
+// /* GET Broadcast json. */
+// router.get('/broadcast/featured', function (req, res) {
+//   let start = moment().startOf('day'); // set to 12:00 am today
+//   let end = moment().endOf('day');
+//   let db = req.db;
+//   let collection = db.get('broadcastCollection');
+//   let dbQuery = { "broadcastAirDate": { $gte: start, $lt: end } };
+//   collection.find(dbQuery, function (e, docs) {
+//     res.json(docs);
+//   });
+// });
+
 /* GET Edit Broadcast Page. */
-router.get('/addBroadcast', function (req, res) {
+router.get('/broadcast/add', function (req, res) {
   res.render('addBroadcast', { title: 'Edit Broadcast Details' });
 });
 
@@ -66,8 +79,8 @@ router.get('/addBroadcast', function (req, res) {
 -do more error checking
 */
 /* post Edit Broadcast Page. */
-router.post('/addBroadcast', function (req, res) {
-  // Set our internal DB variable
+router.post('/broadcast/add', function (req, res) {
+  // Set our internal DB letiable
   let db = req.db;
 
   // Get our form values. These rely on the "name" attributes
@@ -98,7 +111,7 @@ router.post('/addBroadcast', function (req, res) {
       res.send('There was a problem adding the information to the database.');
     } else {
       // And forward to success page
-      res.redirect('/broadcasts');
+      res.redirect('/');
     }
   });
 });
