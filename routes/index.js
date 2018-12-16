@@ -49,7 +49,8 @@ router.get('/broadcast/archive', function (req, res) {
 router.get('/broadcast/recent', function (req, res) {
   let db = req.db;
   let collection = db.get('broadcastCollection');
-  let dbQuery = { "broadcastAirDate": { $gte: new Date((new Date().getTime() - (10 * 24 * 60 * 60 * 1000))), $lte: new Date((new Date().getTime())) } };
+  let daysOfHistory = 10;
+  let dbQuery = { "broadcastAirDate": { $gte: new Date((new Date().getTime() - (daysOfHistory * 24 * 60 * 60 * 1000))), $lte: new Date((new Date().getTime())) } };
   collection.find(dbQuery, {}, function (e, docs) {
     let sortedBroadcastData = docs.sort(sortDesc("broadcastAirDate"));
     res.json(sortedBroadcastData);
@@ -57,16 +58,16 @@ router.get('/broadcast/recent', function (req, res) {
 });
 
 // /* GET Broadcast json. */
-// router.get('/broadcast/featured', function (req, res) {
-//   let start = moment().startOf('day'); // set to 12:00 am today
-//   let end = moment().endOf('day');
-//   let db = req.db;
-//   let collection = db.get('broadcastCollection');
-//   let dbQuery = { "broadcastAirDate": { $gte: start, $lt: end } };
-//   collection.find(dbQuery, function (e, docs) {
-//     res.json(docs);
-//   });
-// });
+router.get('/broadcast/featured', function (req, res) {
+  let db = req.db;
+  let collection = db.get('broadcastCollection');
+  let daysOfHistory = 10;
+  let dbQuery = { "broadcastAirDate": { $gte: new Date((new Date().getTime() - (daysOfHistory * 24 * 60 * 60 * 1000))), $lte: new Date((new Date().getTime())) } };
+  collection.find(dbQuery, {}, function (e, docs) {
+    let sortedBroadcastData = docs.sort(sortDesc("broadcastAirDate"));
+    res.json(sortedBroadcastData);
+  });
+});
 
 /* GET Edit Broadcast Page. */
 router.get('/broadcast/add', function (req, res) {
