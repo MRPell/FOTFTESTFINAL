@@ -27,7 +27,7 @@ html {
 }
 
 #broadcastArchiveSection{
-   margin-top:70px;
+   padding-top:70px;
 }
 
 .section {
@@ -333,15 +333,20 @@ p {
 
 /* ADD broadcast page BEGIN=================== */
 #addBroadcastContent{ 
-   margin: 0 auto;  
    text-align: left;
+   height: 100vh;
 }
 input {
-   width: 50%;
+   width: 90%;
    display: inline-block;
    margin: 1em 0;
 }
+
 .resourceExamples{
+   padding-top: 40px;
+}
+
+button, .resourceExamples, #addBroadcastContent{
    margin: 0 auto;
 }
 .resourceExamples td{

@@ -71,9 +71,8 @@ let populateFeatured = function (data) {
   let broadcastPlayer = $("#broadcastPlayer")[0];
   let yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  console.log(yesterday + "yesterday:"+ yesterday >= featuredBroadcast.broadcastAirDate + "featuredBroadcast.broadcastAirDate" + featuredBroadcast.broadcastAirDate)
-  if (yesterday >= featuredBroadcast.broadcastAirDate) {
-    $('featuredBroadcastDate').html(moment(this.broadcastAirDate).format('ddd MM/DD/YYYY'))
+  if (moment(featuredBroadcast.broadcastAirDate).isSameOrBefore(yesterday)) {
+    $('#featuredBroadcastDate').html(moment(featuredBroadcast.broadcastAirDate).format('ddd MM/DD/YYYY'))
   }
   $('#featuredBroadcastTitle').html(featuredBroadcast.broadcastTitle);
   $('#featuredBroadcastGuests').html('Broadcast Guest(s): ' + featuredBroadcast.broadcastGuests);
