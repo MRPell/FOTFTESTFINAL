@@ -58,10 +58,10 @@ router.get('/broadcast/recent', function (req, res) {
 });
 
 
-/* GET Edit Broadcast Page. */
-router.get('/broadcast/add', function (req, res) {
-  res.render('addBroadcast', { title: 'Add Broadcast' });
-});
+// /* GET Edit Broadcast Page. */
+// router.get('/broadcast/add', function (req, res) {
+//   res.render('addBroadcast', { title: 'Add Broadcast' });
+// });
 
 
 /* TODO:
@@ -69,41 +69,41 @@ router.get('/broadcast/add', function (req, res) {
 -do more error checking
 */
 /* post Edit Broadcast Page. */
-router.post('/broadcast/add', function (req, res) {
-  // Set our internal DB letiable
-  let db = req.db;
+// router.post('/broadcast/add', function (req, res) {
+//   // Set our internal DB letiable
+//   let db = req.db;
 
-  // Get our form values. These rely on the "name" attributes
-  let broadcastTitle = req.body.broadcastTitle;
-  let broadcastAirDate = req.body.broadcastAirDate;
-  let broadcastGuests = req.body.Guests;
-  let broadcastHosts = req.body.broadcastHosts;
-  let broadcastImage = req.body.broadcastImage;
-  let audioFile = req.body.audioFile;
+//   // Get our form values. These rely on the "name" attributes
+//   let broadcastTitle = req.body.broadcastTitle;
+//   let broadcastAirDate = req.body.broadcastAirDate;
+//   let broadcastGuests = req.body.Guests;
+//   let broadcastHosts = req.body.broadcastHosts;
+//   let broadcastImage = req.body.broadcastImage;
+//   let audioFile = req.body.audioFile;
 
 
-  // Set the collection
-  let collection = db.get('broadcastCollection');
+//   // Set the collection
+//   let collection = db.get('broadcastCollection');
 
-  // Submit to the DB
+//   // Submit to the DB
 
-  collection.insert({
-    'broadcastTitle': broadcastTitle,
-    'broadcastImage': broadcastImage,
-    'broadcastAirDate': broadcastAirDate,
-    'broadcastGuests': broadcastGuests,
-    'broadcastHosts': broadcastHosts,
-    'audioFile': audioFile,
+//   collection.insert({
+//     'broadcastTitle': broadcastTitle,
+//     'broadcastImage': broadcastImage,
+//     'broadcastAirDate': broadcastAirDate,
+//     'broadcastGuests': broadcastGuests,
+//     'broadcastHosts': broadcastHosts,
+//     'audioFile': audioFile,
 
-  }, function (err, doc) {
-    if (err) {
-      // If it failed, return error
-      res.send('There was a problem adding the information to the database.');
-    } else {
-      // And forward to success page
-      res.redirect('/');
-    }
-  });
-});
+//   }, function (err, doc) {
+//     if (err) {
+//       // If it failed, return error
+//       res.send('There was a problem adding the information to the database.');
+//     } else {
+//       // And forward to success page
+//       res.redirect('/');
+//     }
+//   });
+// });
 
 module.exports = router;
