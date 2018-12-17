@@ -4,15 +4,14 @@ block content
   main#broadcastArchiveSection.section.shadowBottom
     #broadcastArchiveContainer.container.flexContainer.card
       #broadcastArchiveContent.content
-        h1 Recent Episodes
-        each broadcast, index in broadcastArchive
-          a.showBroadcastDetails(href='/' rel= broadcast.broadcastTitle onclick=showBroadcastDetails)
-            li.recentBroadcastCard.flexContainer
-              div
-                h4 Air Date
-                h4=moment(broadcast.broadcastAirDate).format('MM/DD/YYYY')
-              div
-                h3=broadcast.broadcastTitle
-                h4 Guests:&nbsp;
-                  =broadcast.broadcastGuests
-            hr        
+        h1 Episode Archive (not linked to anything yet)
+        each broadcast, index in broadcastArchive          
+          li.recentBroadcastCard.flexContainer
+            div
+              h4 Air Date
+              h4=moment(broadcast.broadcastAirDate).format('MM/DD/YYYY')
+            div
+              h3=broadcast.broadcastTitle
+              h4 Guests:&nbsp;
+                =broadcast.broadcastGuests
+          hr        

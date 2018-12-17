@@ -18,17 +18,6 @@ let app = express();
 app.locals.moment = require('moment');
 
 
-
-//TODO: Set up cloud database
-// const MongoClient = require('mongodb').MongoClient;
-// const uri = "mongodb+srv://MRPell:<Password>@genesiscluster-mwmsw.mongodb.net/test?retryWrites=true";
-// const client = new MongoClient(uri, { useNewUrlParser: true });
-// client.connect(err => {
-//   const db = client.db("fotfBroadcastApp").collection("broadcastList");
-//  // perform actions on the collection object
-//   client.close();
-// });
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

@@ -1,23 +1,15 @@
 
-// BroadcastList data array for filling in info box
+// BroadcastList data array for filling in featured Box
+//keep track of index to prevent unnecessary server calls
 let broadcastListData = [];
 let featuredBroadcastIndex = 0;
 
 // DOM Ready =============================================================
 $(document).ready(function () {
-
   // Populate the broadcasts on initial page load
   getRecentBroadcasts();
-
-  //Enable mobile menu Icon to be clicked
-  document.getElementById("navIcon").addEventListener("click", toggleFooterMenu);
-
-  //Enable arrows to be clicked
-  document.getElementById("prevArr").addEventListener("click", previousBroadcast);
-
-  document.getElementById("nextArr").addEventListener("click", nextBroadcast);
-
 });
+
 
 // Functions BEGIN========================================================
 
@@ -39,6 +31,7 @@ let getRecentBroadcasts = function () {
 
 let populateRecents = function (data) {
   let listContent = '';
+
   $.each(data, function () {
     let broadcastUrl = this.broadcastTitle.replace(/\s/g, '-').toLowerCase();
     listContent +=
@@ -51,23 +44,25 @@ let populateRecents = function (data) {
       //'</a >' +
       '<br /> <hr /> <br />';
   });
-  // Inject the whole content string into our existing HTML table
+
+  // Inject the whole content string into recent broadcast list
   $('#recentEpisodesList').html(listContent);
-  // Broadcast link click
-  $('#recentEpisodesList').on('click', 'a.changeFeaturedBroadcast', changeFeaturedBroadcast);
 }
 
 let populateFeatured = function () {
   let featuredBroadcast = broadcastListData[featuredBroadcastIndex];
   let broadcastPlayer = $("#broadcastPlayer")[0];
   let yesterday = moment().subtract(1, 'days');
-  displayControls();
+
+  updateSelectionArrows();
+
   if (moment(featuredBroadcast.broadcastAirDate).isSameOrBefore(yesterday)) {
     $('#featuredBroadcastDate').html(moment(featuredBroadcast.broadcastAirDate).format('ddd MM/DD/YYYY'))
   }
   else {
     $('#featuredBroadcastDate').html("Today's Broadcast")
   }
+
   $('#featuredBroadcastTitle').html(featuredBroadcast.broadcastTitle);
   $('#featuredBroadcastGuests').html('Broadcast Guest(s): ' + featuredBroadcast.broadcastGuests);
   $('#featuredBroadcastDescription').html(featuredBroadcast.broadcastDescription);
@@ -79,11 +74,8 @@ let populateFeatured = function () {
 
 }
 
-
 // Feature the Broadcast Info
 function changeFeaturedBroadcast(event) {
-  // Prevent Link from Firing
-  // event.preventDefault();
   let thisTitleName = $(this).attr('rel');
   // Get Index of object based on id value
   featuredBroadcastIndex = broadcastListData.map(function (arrayItem) {
@@ -98,58 +90,66 @@ function changeFeaturedBroadcast(event) {
 
 //GUI Control functions Begin ======================================
 
-let displayControls = function () {
-  if (featuredBroadcastIndex === 0) {
-    $(".rightArrow").hide();
-    $(".leftArrow").show();
-  }
-  else if (featuredBroadcastIndex === (broadcastListData.length - 1)) {
-    $(".rightArrow").show();
-    $(".leftArrow").hide();
-  }
-  else {
-    $(".rightArrow").show();
-    $(".leftArrow").show();
-  }
-}
 
-let nextBroadcast = function () {
-  featuredBroadcastIndex -= 1;
-  populateFeatured()
-}
-
-let previousBroadcast = function () {
-  featuredBroadcastIndex += 1;
-  populateFeatured()
-}
-
-//bring footer menu to front of screen
-let toggleFooterMenu = function () {
-  let x = $('footer');
-  x.toggleClass('bringToFront')
-
-}
-
-
-//Audio Player Button ===============================================================
+//a function to Listen for navigation icons to be clicked
 $(
   function () {
-    let broadcastPlayer = $("#broadcastPlayer");
-    let playPauseButton = $('.playPause');
-    $('.playButton').on('click', function () {
-
-      broadcastPlayer.show();
-
-      if (broadcastPlayer[0].paused) {
-        broadcastPlayer[0].play();
-        playPauseButton.removeClass('fa-play-circle');
-        playPauseButton.addClass('fa-pause');
-      }
-      else {
-        broadcastPlayer[0].pause();
-        playPauseButton.removeClass('fa-pause');
-        playPauseButton.addClass('fa-play-circle');
-      }
+    //nav arrows
+    $('#nextArr').on('click', function () {
+      featuredBroadcastIndex -= 1;
+      populateFeatured()
     })
 
+    //nav arrows
+    $('#prevArr').on('click', function () {
+      featuredBroadcastIndex += 1;
+      populateFeatured()
+    })
+
+    //menu Icon
+    $('#navIcon').on('click', function () {
+      //bring footer menu to front of screen
+      let footerMenu = $('footer');
+      footerMenu.toggleClass('bringToFront')
+    })
+
+    // Broadcast link click
+    $('#recentEpisodesList').on('click', 'a.changeFeaturedBroadcast', changeFeaturedBroadcast);
+
+    //Audio Player Button 
+    $('.playButton').on('click', toggleAudio);
   });
+
+  let updateSelectionArrows = function () {
+    if (featuredBroadcastIndex === 0) {
+      $(".rightArrow").hide();
+      $(".leftArrow").show();
+    }
+    else if (featuredBroadcastIndex === (broadcastListData.length - 1)) {
+      $(".rightArrow").show();
+      $(".leftArrow").hide();
+    }
+    else {
+      $(".rightArrow").show();
+      $(".leftArrow").show();
+    }
+  }
+  
+  //turn audio on an off as well as change play button
+  let toggleAudio = function () {
+    let broadcastPlayer = $("#broadcastPlayer");
+    let playPauseButton = $('.playPause');
+  
+    broadcastPlayer.show();
+  
+    if (broadcastPlayer[0].paused) {
+      broadcastPlayer[0].play();
+      playPauseButton.removeClass('fa-play-circle');
+      playPauseButton.addClass('fa-pause');
+    }
+    else {
+      broadcastPlayer[0].pause();
+      playPauseButton.removeClass('fa-pause');
+      playPauseButton.addClass('fa-play-circle');
+    }
+  }
