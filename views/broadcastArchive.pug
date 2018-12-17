@@ -1,20 +1,18 @@
 extends layout
 
 block content
-  main#recentBroadcastCardsSection.section.shadowBottom
-    #recentBroadcastCardContainer.container.flexContainer.card
-      #recentEpisodeContent.content
-        h1 recent Episodes
+  main#broadcastArchiveSection.section.shadowBottom
+    #broadcastArchiveContainer.container.flexContainer.card
+      #broadcastArchiveContent.content
+        h1 Recent Episodes
         each broadcast, index in broadcastArchive
-          li.recentBroadcastCard.flexContainer
-            div
-              h4 Air Date
-              h4=moment(broadcast.broadcastAirDate).format('MM/DD/YYYY')
-            div
-              h3 
-                a(href='/broadcast/details/' + broadcast.broadcastTitle.replace(/\s/g, '-' ).toLowerCase())=broadcast.broadcastTitle
-              h4 Guests:&nbsp;
-                =broadcast.broadcastGuests
-          hr        
-
-  
+          a.showBroadcastDetails(href='/' rel= broadcast.broadcastTitle onclick=showBroadcastDetails)
+            li.recentBroadcastCard.flexContainer
+              div
+                h4 Air Date
+                h4=moment(broadcast.broadcastAirDate).format('MM/DD/YYYY')
+              div
+                h3=broadcast.broadcastTitle
+                h4 Guests:&nbsp;
+                  =broadcast.broadcastGuests
+            hr        

@@ -1,32 +1,36 @@
 extends layout
 
 block content
-
   section#featuredBroadcastSection.shadowBottom.section
     #featuredBroadcastContainer.card.container.flexContainer
       #featuredBroadcastContent.content
         .featureBroadcastDate
-          h3 Today&apos;s Broadcast
-        .fontAwesome.playButton
-          span.far.fa-play-circle
+          h2#featuredBroadcastDate Today&apos;s Broadcast
+        .playButton
+          span.fontAwesome.playPause.far.fa-play-circle
+          //- span.fontAwesome.pause.fas.fa-pause
         .featureBroadcastTitle
           h1#featuredBroadcastTitle Broadcast Title
+        .progressBarContainer
+          audio#broadcastPlayer(controls)
+            source#audioSource(src="" type='audio/mpeg')
+            | Your browser does not support html 5 audio!   
+          //- progress#progressBar.progressBar(value='0' max='1')          
         .fontAwesome.leftArrow
           span.fas.fa-angle-left
         .featureBroadcastGuests
-          h3#featuredBroadcastGuests Broadcast Guests 
+          h3#featuredBroadcastGuests Broadcast Guest(s): 
         .fontAwesome.rightArrow
           span.fas.fa-angle-right
         .featureBroadcastDescription.mobileHide
           p#featuredBroadcastDescription
-            | Broadcast Description sdakjf skdaf asdj dhfa jdkf asdjf askdjf sf sadkjf slakdjf lsakdjf
   section#hostSection.section
     #hostContainer.container.card.flexContainer
       #hostContent.content
         h1 Hosts of the Broadcast
         #hostBioContainer.flexContainer
           .hostBio
-            img.hostImage(src='http://link.focusonthefamily.com/email/CRM/11/VidScreenShot.jpg')
+            img.hostImage(src='/images/daly-jim.jpg')
             h2 Jim Daly
             p
               | Jim Daly is an author and broadcaster, president of Focus on the Family and host of the daily
@@ -35,7 +39,7 @@ block content
               | National
               | Religious Broadcasters.
           .hostBio
-            img.hostImage(src='http://link.focusonthefamily.com/email/CRM/11/VidScreenShot.jpg')
+            img.hostImage(src='/images/fuller-john.jpg')
             h2 John Fuller
             p
               | John Fuller is vice president of the Audio division and co-host of the daily &quot;Focus on the Family&quot;
@@ -48,17 +52,5 @@ block content
       #recentEpisodeContent.content
         h1 Recent Episodes
         div#recentEpisodesList
-          li.flexContainer.recentBroadcastCard
-            div
-              h3 Air Date
-            div
-              h2 Broadcast Titles
-              h3 Guests
-          hr
-          li.flexContainer.recentBroadcastCard
-            div
-              h3 Air Date
-            div
-              h2 Broadcast Title
-              h3 Guests
+
   

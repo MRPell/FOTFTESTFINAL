@@ -1,20 +1,66 @@
 extends layout
 
 block content
-  h1= title
-  form#formAddBroadcast(name="addBroadcast",method="post",action="/addBroadcast")
-    input#inputBroadcastTitle(type="text", placeholder="broadcastTitle", name="broadcastTitle")
-    input#inputBroadcastAirDate(type="date", placeholder="broadcastAirDate", name="broadcastAirDate")
-    input#inputBroadcastGuests(type="text", placeholder="broadcastGuests", name="broadcastGuests")
-    input#inputBroadcastHosts(type="text", placeholder="Hosts", name="broadcastHosts")
-    br
-    label(for="broadcastImage") Broadcast Image
-    br
-    input#inputBroadcastImage(type="file", name="broadcastImage")
-    br
-    label(for="audioFile") Broadcast Audio File
-    br
-    input#inputAudioFile(type="file", name="audioFile")
-    br
-    br
-    button#btnSubmit(type="submit") submit
+  main#broadcastArchiveSection.section.shadowBottom
+      #addBroadcastContainer.container.flexContainer.card
+        #addBroadcastContent.content
+          h1= title
+          p All inputs required
+          form#formAddBroadcast(name="addBroadcast",method="post",action="/addBroadcast" required)
+            input#inputBroadcastTitle(type="text", placeholder="broadcastTitle", name="broadcastTitle" required)
+            input#inputBroadcastAirDate(type="date", placeholder="broadcastAirDate", name="broadcastAirDate" required)
+            label(for="broadcastAirDate") Air Date
+            input#inputBroadcastGuests(type="text", placeholder="broadcastGuests", name="broadcastGuests" required)
+            input#inputBroadcastHosts(type="text", placeholder="Hosts", name="broadcastHosts" required)
+            br                       
+            input#inputBroadcastImage(type="text", pattern="/[\s\S]+(\.jpg)\b/g" placeholder="Imagename.jpg", name="broadcastImage" required)
+            label(for="broadcastImage") .jpg only             
+            br                        
+            input#inputAudioFile(type="text",pattern="/[\s\S]+(\.mp3)\b/g" placeholder="AudioFilename.mp3" name="audioFile" required)
+            label(for="audioFile") .mp3 only
+            br
+            br
+            button#btnSubmit(type="submit") submit
+      .section
+        .content
+          table.resourceExamples
+            tr
+              td
+                | Image File Options
+              td
+                | Audio File Options          
+            tr
+              td
+                | art-microphone.jpg
+              td
+                | 01 1-1.mp3
+            tr
+              td
+                | Embracing-the-Reality-of-Christmas.jpg
+              td
+                | 02 1-2.mp3  
+            tr
+              td
+                | microphone.jpg   
+              td
+                |03 1-3.mp3                     
+            tr
+              td
+                | morning-routine.jpg   
+              td
+                |04 1-4.mp3
+            tr
+              td
+                | sound-speaker-radio-microphone.jpg   
+              td
+                |05 1-5.mp3
+            tr
+              td
+                | vintage-radio.jpg   
+              td
+                |06 1-6.mp3
+            tr
+              td
+                |   
+              td
+                |... 25 1-25.mp3                                                                

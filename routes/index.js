@@ -49,7 +49,7 @@ router.get('/broadcast/archive', function (req, res) {
 router.get('/broadcast/recent', function (req, res) {
   let db = req.db;
   let collection = db.get('broadcastCollection');
-  let daysOfHistory = 10;
+  let daysOfHistory = 7;
   let dbQuery = { "broadcastAirDate": { $gte: new Date((new Date().getTime() - (daysOfHistory * 24 * 60 * 60 * 1000))), $lte: new Date((new Date().getTime())) } };
   collection.find(dbQuery, {}, function (e, docs) {
     let sortedBroadcastData = docs.sort(sortDesc("broadcastAirDate"));
@@ -58,10 +58,10 @@ router.get('/broadcast/recent', function (req, res) {
 });
 
 // /* GET Broadcast json. */
-router.get('/broadcast/featured', function (req, res) {
+router.get('/broadcast/featured/', function (req, res) {
   let db = req.db;
   let collection = db.get('broadcastCollection');
-  let daysOfHistory = 10;
+  let daysOfHistory = 1;
   let dbQuery = { "broadcastAirDate": { $gte: new Date((new Date().getTime() - (daysOfHistory * 24 * 60 * 60 * 1000))), $lte: new Date((new Date().getTime())) } };
   collection.find(dbQuery, {}, function (e, docs) {
     let sortedBroadcastData = docs.sort(sortDesc("broadcastAirDate"));
@@ -69,9 +69,21 @@ router.get('/broadcast/featured', function (req, res) {
   });
 });
 
+//TODO: Either finish implementing this or delete it
+// /* GET Broadcast json. */
+// router.get('/broadcast/details/:date', function (req, res) {
+//   let db = req.db;
+//   let collection = db.get('broadcastCollection');
+//   let broadcastDate = req.params.date;
+//   let dbQuery = { "broadcastAirDate": broadcastDate};
+//   collection.findOne(dbQuery, function (e, docs) {   
+//     res.json(docs);
+//   });
+// });
+
 /* GET Edit Broadcast Page. */
 router.get('/broadcast/add', function (req, res) {
-  res.render('addBroadcast', { title: 'Edit Broadcast Details' });
+  res.render('addBroadcast', { title: 'Add Broadcast' });
 });
 
 
