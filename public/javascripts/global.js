@@ -19,7 +19,7 @@ $(document).ready(function () {
 
 // Functions BEGIN========================================================
 
-// data gathering and page rendering =====================================
+// data gathering and page rendering ================
 let getRecentBroadcasts = function () {
 
   fetch('/broadcast/recent')
@@ -52,7 +52,7 @@ let populateRecents = function (data) {
     let broadcastUrl = this.broadcastTitle.replace(/\s/g, '-').toLowerCase();
     listContent +=
       //'<a href="/broadcast/details/' + moment(this.broadcastAirDate).format('MM-DD-YYYY') + '" >' +
-      '<a href="#" class="showBroadcastDetails" rel="' + this.broadcastTitle + '">' +
+      '<a href="#" class="changeFeaturedBroadcast" rel="' + this.broadcastTitle + '">' +
       '<li class="flexContainer recentBroadcastCard"><div><h3>Air Date:</h3>' +
       '<h4>' + moment(this.broadcastAirDate).format('ddd') + ' ' +
       moment(this.broadcastAirDate).format('MM/DD/YYYY') + '</h4>' +
@@ -63,16 +63,18 @@ let populateRecents = function (data) {
   // Inject the whole content string into our existing HTML table
   $('#recentEpisodesList').html(listContent);
   // Username link click
-  $('#recentEpisodesList').on('click', 'a.showBroadcastDetails', showBroadcastDetails);
+  $('#recentEpisodesList').on('click', 'a.changeFeaturedBroadcast', changeFeaturedBroadcast);
 }
 
 let populateFeatured = function (data) {
   let featuredBroadcast = data[0];
   let broadcastPlayer = $("#broadcastPlayer")[0];
-  let yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
+  let yesterday = moment().subtract(1, 'days');
   if (moment(featuredBroadcast.broadcastAirDate).isSameOrBefore(yesterday)) {
     $('#featuredBroadcastDate').html(moment(featuredBroadcast.broadcastAirDate).format('ddd MM/DD/YYYY'))
+  }
+  else{
+    $('#featuredBroadcastDate').html("Today's Broadcast")
   }
   $('#featuredBroadcastTitle').html(featuredBroadcast.broadcastTitle);
   $('#featuredBroadcastGuests').html('Broadcast Guest(s): ' + featuredBroadcast.broadcastGuests);
@@ -86,17 +88,19 @@ let populateFeatured = function (data) {
 }
 
 
-// Show Broadcast Info
-function showBroadcastDetails(event) {
+// Feature the Broadcast Info
+function changeFeaturedBroadcast(event) {
   // Prevent Link from Firing
   // event.preventDefault();
   let thisTitleName = $(this).attr('rel');
   // Get Index of object based on id value
-  let arrayPosition = broadcastListData.map(function (arrayItem) { return arrayItem.broadcastTitle; }).indexOf(thisTitleName);
+  let arrayPosition = broadcastListData.map(function (arrayItem) { 
+    return arrayItem.broadcastTitle; })
+    .indexOf(thisTitleName);
   let broadcastObject = [broadcastListData[arrayPosition]];
   populateFeatured(broadcastObject)
 }
-  //End Data gathering and rendering======================================================
+  //End Data gathering and rendering=====================
 
   //bring footer menu to front of screen
   function toggleFooterMenu() {
