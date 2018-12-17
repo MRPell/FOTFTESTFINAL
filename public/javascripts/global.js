@@ -1,25 +1,27 @@
 
 // BroadcastList data array for filling in info box
 let broadcastListData = [];
+let featuredBroadcastIndex = 0;
 
 // DOM Ready =============================================================
 $(document).ready(function () {
 
   // Populate the broadcasts on initial page load
   getRecentBroadcasts();
-  getFeaturedBroadcasts();
 
   //Enable mobile menu Icon to be clicked
   document.getElementById("navIcon").addEventListener("click", toggleFooterMenu);
 
-  //Enable mobile menu Icon to be clicked
-  document.getElementById("navIcon").addEventListener("click", toggleFooterMenu);
+  //Enable arrows to be clicked
+  document.getElementById("prevArr").addEventListener("click", previousBroadcast);
+
+  document.getElementById("nextArr").addEventListener("click", nextBroadcast);
 
 });
 
 // Functions BEGIN========================================================
 
-// data gathering and page rendering ================
+// data gathering and page rendering =============================
 let getRecentBroadcasts = function () {
 
   fetch('/broadcast/recent')
@@ -27,24 +29,13 @@ let getRecentBroadcasts = function () {
     .then(recentBroadcastsJson => {
       broadcastListData = recentBroadcastsJson;
       populateRecents(recentBroadcastsJson);
+      populateFeatured();
     })
     .catch(error => {
       console.log(error)
     });
 };
 
-let getFeaturedBroadcasts = function () {
-
-  fetch('/broadcast/featured')
-    .then(response => response.json())
-    .then(featuredBroadcastsJson => {
-
-      populateFeatured(featuredBroadcastsJson);
-    })
-    .catch(error => {
-      console.log(error)
-    });
-};
 
 let populateRecents = function (data) {
   let listContent = '';
@@ -62,18 +53,19 @@ let populateRecents = function (data) {
   });
   // Inject the whole content string into our existing HTML table
   $('#recentEpisodesList').html(listContent);
-  // Username link click
+  // Broadcast link click
   $('#recentEpisodesList').on('click', 'a.changeFeaturedBroadcast', changeFeaturedBroadcast);
 }
 
-let populateFeatured = function (data) {
-  let featuredBroadcast = data[0];
+let populateFeatured = function () {
+  let featuredBroadcast = broadcastListData[featuredBroadcastIndex];
   let broadcastPlayer = $("#broadcastPlayer")[0];
   let yesterday = moment().subtract(1, 'days');
+  displayControls();
   if (moment(featuredBroadcast.broadcastAirDate).isSameOrBefore(yesterday)) {
     $('#featuredBroadcastDate').html(moment(featuredBroadcast.broadcastAirDate).format('ddd MM/DD/YYYY'))
   }
-  else{
+  else {
     $('#featuredBroadcastDate').html("Today's Broadcast")
   }
   $('#featuredBroadcastTitle').html(featuredBroadcast.broadcastTitle);
@@ -94,42 +86,70 @@ function changeFeaturedBroadcast(event) {
   // event.preventDefault();
   let thisTitleName = $(this).attr('rel');
   // Get Index of object based on id value
-  let arrayPosition = broadcastListData.map(function (arrayItem) { 
-    return arrayItem.broadcastTitle; })
+  featuredBroadcastIndex = broadcastListData.map(function (arrayItem) {
+    return arrayItem.broadcastTitle;
+  })
     .indexOf(thisTitleName);
-  let broadcastObject = [broadcastListData[arrayPosition]];
-  populateFeatured(broadcastObject)
+  populateFeatured()
 }
-  //End Data gathering and rendering=====================
+//End Data gathering and rendering=====================
 
-  //bring footer menu to front of screen
-  function toggleFooterMenu() {
-    console.log('toggle footer')
-    let x = $('footer');
-    x.toggleClass('bringToFront')
 
+
+//GUI Control functions Begin ======================================
+
+let displayControls = function () {
+  if (featuredBroadcastIndex === 0) {
+    $(".rightArrow").hide();
+    $(".leftArrow").show();
   }
+  else if (featuredBroadcastIndex === (broadcastListData.length - 1)) {
+    $(".rightArrow").show();
+    $(".leftArrow").hide();
+  }
+  else {
+    $(".rightArrow").show();
+    $(".leftArrow").show();
+  }
+}
+
+let nextBroadcast = function () {
+  featuredBroadcastIndex -= 1;
+  populateFeatured()
+}
+
+let previousBroadcast = function () {
+  featuredBroadcastIndex += 1;
+  populateFeatured()
+}
+
+//bring footer menu to front of screen
+let toggleFooterMenu = function () {
+  let x = $('footer');
+  x.toggleClass('bringToFront')
+
+}
 
 
-  //Audio Player Button ===============================================================
-  $(
-    function () {
-      let broadcastPlayer = $("#broadcastPlayer");
-      let playPauseButton = $('.playPause');
-      $('.playButton').on('click', function () {
+//Audio Player Button ===============================================================
+$(
+  function () {
+    let broadcastPlayer = $("#broadcastPlayer");
+    let playPauseButton = $('.playPause');
+    $('.playButton').on('click', function () {
 
-        broadcastPlayer.show();
+      broadcastPlayer.show();
 
-        if (broadcastPlayer[0].paused) {
-          broadcastPlayer[0].play();
-          playPauseButton.removeClass('fa-play-circle');
-          playPauseButton.addClass('fa-pause');
-        }
-        else {
-          broadcastPlayer[0].pause();
-          playPauseButton.removeClass('fa-pause');
-          playPauseButton.addClass('fa-play-circle');
-        }
-      })
+      if (broadcastPlayer[0].paused) {
+        broadcastPlayer[0].play();
+        playPauseButton.removeClass('fa-play-circle');
+        playPauseButton.addClass('fa-pause');
+      }
+      else {
+        broadcastPlayer[0].pause();
+        playPauseButton.removeClass('fa-pause');
+        playPauseButton.addClass('fa-play-circle');
+      }
+    })
 
-    });
+  });

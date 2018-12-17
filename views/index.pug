@@ -6,21 +6,19 @@ block content
       #featuredBroadcastContent.content
         .featureBroadcastDate
           h2#featuredBroadcastDate Today&apos;s Broadcast
-        .playButton
+        .playButton.clickable
           span.fontAwesome.playPause.far.fa-play-circle
-          //- span.fontAwesome.pause.fas.fa-pause
         .featureBroadcastTitle
           h1#featuredBroadcastTitle Broadcast Title
         .progressBarContainer
           audio#broadcastPlayer(controls)
             source#audioSource(src="" type='audio/mpeg')
-            | Your browser does not support html 5 audio!   
-          //- progress#progressBar.progressBar(value='0' max='1')          
-        .fontAwesome.leftArrow
+            | Your browser does not support html 5 audio!           
+        #prevArr.fontAwesome.leftArrow.clickable
           span.fas.fa-angle-left
         .featureBroadcastGuests
           h3#featuredBroadcastGuests Broadcast Guest(s): 
-        .fontAwesome.rightArrow
+        #nextArr.fontAwesome.rightArrow.clickable
           span.fas.fa-angle-right
         .featureBroadcastDescription.mobileHide
           p#featuredBroadcastDescription

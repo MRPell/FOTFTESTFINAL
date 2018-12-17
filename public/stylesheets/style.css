@@ -50,6 +50,10 @@ html {
 
 }
 
+.clickable{
+   cursor: pointer;
+}
+
 #copyWrite {
    margin: 3em 2em 1em;
 }
@@ -74,6 +78,7 @@ html {
 
 #featuredBroadcastContent {
    color: var(--lightText);
+   padding-top:100px;
    text-shadow: -1px 0  #46494C, 0 1px  #46494C, 1px 0 #46494C, 0 -1px #46494C;
    display: grid;
    max-width: 640px;
@@ -124,7 +129,6 @@ html {
 
 .playButton {
    grid-area: playButton;
-   cursor: pointer;
 }
 
 .progressBar{
@@ -273,7 +277,6 @@ p {
 }
 
 .fa-bars {
-   cursor: pointer;
    color: var(--lightText);
    margin: 0 1em;
 }
