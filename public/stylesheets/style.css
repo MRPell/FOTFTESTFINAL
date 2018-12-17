@@ -334,29 +334,6 @@ p {
     box-shadow: 0 8px 16px -6px #555555;
 }
 
-/* ADD broadcast page BEGIN=================== */
-#addBroadcastContent{ 
-   text-align: left;
-   height: 100vh;
-}
-input {
-   width: 90%;
-   display: inline-block;
-   margin: 1em 0;
-}
-
-.resourceExamples{
-   padding-top: 40px;
-}
-
-button, .resourceExamples, #addBroadcastContent{
-   margin: 0 auto;
-}
-.resourceExamples td{
-   padding: 3px 2em;
-}
-/* ADD broadcast page END=================== */
-
 @media screen and (max-width: 670px) {
 
    h1 {
