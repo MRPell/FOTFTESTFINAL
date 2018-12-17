@@ -1,5 +1,8 @@
 Welcome to Matt Pell's interview test app!
-This
+This displays a featured broadcast and allows you to play it. The image and audio files are randomly assigned to broadcast
+and stored in a mongo database. The page pulls 7 days of history of broadcasts and allows you to play any of them. Today's broadcast 
+automatically loads, but can be switch by either clicking on the episode 'card' in the recent episodes section or by clicking the
+back and forward arrows in the main area.
 
 Instructions to run:
 
